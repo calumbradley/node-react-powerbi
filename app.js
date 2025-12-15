@@ -37,8 +37,9 @@ app.get('/embed-token', async (req, res) => {
 });
 
 const { powerbiReportsRouter } = require('./routes/powerbiReportsRoute'); // import the router module
-
 app.use('/powerbi', powerbiReportsRouter); // mount it so /powerbi/groups/:groupId/reports works
+const { powerbiWorkspacesRouter } = require('./routes/powerbiWorkspacesRoute'); // loads the router module
+app.use('/powerbi', powerbiWorkspacesRouter); // enables /powerbi/workspaces alongside your other routes
 
 // start the server and listen for requests
 app.listen(PORT, () => {
