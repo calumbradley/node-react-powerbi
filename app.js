@@ -10,7 +10,10 @@ const express = require('express');
 const { generateReportEmbedToken } = require('./services/generateReportEmbedToken');
 
 // create an Express app
-const app = express();
+const app = express(); // create the Express application
+
+// mount simple morgan logger middleware to log incoming HTTP requests
+app.use(require('./middleware/requestLogger')); // uses middleware/requestLogger.js (tiny format)
 
 // read common config from environment
 const PORT = process.env.PORT || 3000;
