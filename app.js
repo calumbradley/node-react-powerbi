@@ -4,13 +4,13 @@
 require('dotenv').config();
 
 // import Express framework
-const express = require('express');
+const express = require('express'); // Express builds the HTTP server
 
 // import the modular powerbi service that handles AAD + Power BI calls
 const { generateReportEmbedToken } = require('./services/generateReportEmbedToken');
 
 // create an Express app
-const app = express(); // create the Express application
+const app = express(); // creates the Express application
 
 // mount simple morgan logger middleware to log incoming HTTP requests
 app.use(require('./middleware/requestLogger')); // uses middleware/requestLogger.js (tiny format)
@@ -21,25 +21,11 @@ const cors = require('cors'); // imports the CORS middleware package
 app.use(cors()); // allows all origins (test-only) to call your API
 
 // read common config from environment
-const PORT = process.env.PORT || 3000;
-const { TENANT_ID, CLIENT_ID, CLIENT_SECRET, WORKSPACE_ID, REPORT_ID } = process.env;
+const PORT = process.env.PORT || 3000; // uses PORT from .env, otherwise defaults to 3000
 
-// simple endpoint that will return an embed token (not implemented yet)
-app.get('/embed-token', async (req, res) => {
-  // basic validation: ensure required env vars are present
-  if (!TENANT_ID || !CLIENT_ID || !CLIENT_SECRET || !WORKSPACE_ID || !REPORT_ID) {
-    return res.status(500).json({ error: 'Missing required environment variables' });
-  }
-
-  try {
-    // call the modular service with workspace and report ids to get embed data
-    const tokenResponse = await generateReportEmbedToken(WORKSPACE_ID, REPORT_ID);
-    return res.json(tokenResponse);
-  } catch (err) {
-    // return error to client
-    return res.status(501).json({ error: err.message || 'Not implemented' });
-  }
-});
+// mount the /embed-token route from routes/ (keeps app.js consistent with other routes)
+const { embedTokenRouter } = require('./routes/embedTokenRoute'); // imports the router module
+app.use(embedTokenRouter); // registers GET /embed-token
 
 const { powerbiReportsRouter } = require('./routes/powerbiReportsRoute'); // import the router module
 app.use('/powerbi', powerbiReportsRouter); // mount it so /powerbi/groups/:groupId/reports works
