@@ -15,6 +15,11 @@ const app = express(); // create the Express application
 // mount simple morgan logger middleware to log incoming HTTP requests
 app.use(require('./middleware/requestLogger')); // uses middleware/requestLogger.js (tiny format)
 
+// enable CORS for all origins (test-only)
+const cors = require('cors'); // imports the CORS middleware package
+
+app.use(cors()); // allows all origins (test-only) to call your API
+
 // read common config from environment
 const PORT = process.env.PORT || 3000;
 const { TENANT_ID, CLIENT_ID, CLIENT_SECRET, WORKSPACE_ID, REPORT_ID } = process.env;

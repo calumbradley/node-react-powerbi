@@ -1,10 +1,5 @@
 // Service module: acquires AAD token and calls Power BI REST APIs (with simple logging)
 
-// read environment variables into clearer local names for readability
-const azureTenantId = process.env.TENANT_ID;                 // Azure AD tenant id
-const servicePrincipalClientId = process.env.CLIENT_ID;     // service principal id
-const servicePrincipalClientSecret = process.env.CLIENT_SECRET; // service principal secret
-
 const { acquireAzureAdAccessToken } = require('./acquireAzureAdAccessToken'); // import auth helper
 
 // small helper to produce ISO timestamps for logs
@@ -36,7 +31,7 @@ async function generateReportEmbedToken(workspaceId, reportId) {
     }
     const reportJson = await reportRes.json();
     const embedUrl = reportJson.embedUrl || '';
-    console.log(`[${nowIso()}] Report metadata fetched`, { embedUrl }); // log embedUrl for debugging
+    console.log(`[${nowIso()}] Report metadata fetched`, { embedUrl });
 
     // request a report embed token (minimal accessLevel: View)
     const genUrl = `https://api.powerbi.com/v1.0/myorg/groups/${workspaceId}/reports/${reportId}/GenerateToken`;
@@ -70,7 +65,6 @@ async function generateReportEmbedToken(workspaceId, reportId) {
   }
 }
 
-// export both the new descriptive name and keep the original name for compatibility
 module.exports = {
-  generateReportEmbedToken,                                   // new descriptive export
+  generateReportEmbedToken,
 };
