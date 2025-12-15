@@ -7,7 +7,7 @@ require('dotenv').config();
 const express = require('express');
 
 // import the modular powerbi service that handles AAD + Power BI calls
-const { getEmbedToken } = require('./services/powerbi');
+const { generateReportEmbedToken } = require('./services/generateReportEmbedToken');
 
 // create an Express app
 const app = express();
@@ -25,7 +25,7 @@ app.get('/embed-token', async (req, res) => {
 
   try {
     // call the modular service with workspace and report ids to get embed data
-    const tokenResponse = await getEmbedToken(WORKSPACE_ID, REPORT_ID);
+    const tokenResponse = await generateReportEmbedToken(WORKSPACE_ID, REPORT_ID);
     return res.json(tokenResponse);
   } catch (err) {
     // return error to client
