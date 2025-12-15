@@ -18,6 +18,7 @@ app.use('/powerbi', powerbiReportsRouter);
 
 const { powerbiWorkspacesRouter } = require('./routes/powerbiWorkspacesRoute');
 app.use('/powerbi', powerbiWorkspacesRouter);
+
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`);
 });
