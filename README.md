@@ -28,8 +28,32 @@ Quick start
   ```
   Response: { "embedToken": "...", "embedUrl": "...", "reportId": "..." }
 
-Notes
-- Node 18+ includes global fetch; install a polyfill (e.g., node-fetch) if using older Node.
-- The service principal must be allowed by tenant settings and added to the Power BI workspace with Member/Contributor/Admin (reshare) rights.
+## Setup (Azure + Power BI)
 
-Shall I add this README to the repository? 
+- Azure AD app registration  
+  - Create a confidential app (record Tenant ID and Client ID). (creates service principal used by the server)
+  - Add a client secret or certificate and save its value. (used for client credentials auth)
+
+- API permissions & consent  
+  - Add Power BI Service API permissions and click "Grant admin consent". (allows app to call Power BI APIs)
+
+- Power BI tenant settings (Admin portal)  
+  - Ensure "Service principals can call Fabric public APIs" or "Allow service principals to use Power BI APIs" is enabled. (lets apps use Power BI REST)
+  - If restricting by groups, add the app's service principal to the allowed security group. (limits which apps can call APIs)
+
+- Workspace & report access (Power BI service)  
+  - Open the target workspace → Access → Add → enter the service principal (app) and assign Member/Contributor/Admin. (these roles allow generating embed tokens / reshare)
+
+- Local app configuration (.env)  
+  - Set TENANT_ID, CLIENT_ID, CLIENT_SECRET, WORKSPACE_ID, REPORT_ID, PORT. (required by the Node server)
+
+- Verify & test  
+  - Start server and call /embed-token; `pnpm dev`
+
+## Required Power BI Service API permissions (Application)
+
+- Report.Read.All — read reports (needed to get embedUrl).  
+- Dataset.Read.All — read datasets (needed if report uses datasets). 
+
+**Important — apply admin consent for all permissions**  
+- After you add the required API permissions in Azure AD, click "Grant admin consent for <your-tenant-name>" to apply tenant-wide admin consent for all configured permissions.
