@@ -42,7 +42,7 @@ Quick start
   - If restricting by groups, add the app's service principal to the allowed security group. (limits which apps can call APIs)
 
 - Workspace & report access (Power BI service)  
-  - Open the target workspace → Access → Add → enter the service principal (app) and assign Viewer.
+  - Open the target workspace → Access → Add → enter the service principal (app) and assign Admin.
 
 - Local app configuration (.env)  
   - Set TENANT_ID, CLIENT_ID, CLIENT_SECRET, WORKSPACE_ID, REPORT_ID, PORT. (required by the Node server)
