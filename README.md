@@ -42,13 +42,13 @@ Quick start
   - If restricting by groups, add the app's service principal to the allowed security group. (limits which apps can call APIs)
 
 - Workspace & report access (Power BI service)  
-  - Open the target workspace → Access → Add → enter the service principal (app) and assign Member/Contributor/Admin. (these roles allow generating embed tokens / reshare)
+  - Open the target workspace → Access → Add → enter the service principal (app) and assign Viewer.
 
 - Local app configuration (.env)  
   - Set TENANT_ID, CLIENT_ID, CLIENT_SECRET, WORKSPACE_ID, REPORT_ID, PORT. (required by the Node server)
 
 - Verify & test  
-  - Start server and call /embed-token; `pnpm dev`
+  - Start server with `node app.js` and call `/embed-token;` with `curl http://localhost:3000/embed-token`
 
 ## Required Power BI Service API permissions (Application)
 
