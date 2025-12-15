@@ -1,0 +1,33 @@
+{
+  "name": "react-powerbi",
+  "version": "1.0.0",
+  "description": "node.js react powerbi integration",
+  "keywords": [
+    "node.js",
+    "react",
+    "powerbi",
+    "embed",
+    "for",
+    "your",
+    "customer"
+  ],
+  "homepage": "https://github.com/calumbradley/node-react-powerbi#readme",
+  "bugs": {
+    "url": "https://github.com/calumbradley/node-react-powerbi/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calumbradley/node-react-powerbi.git"
+  },
+  "license": "ISC",
+  "author": "Calum Bradley",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1"
+  }
+}
